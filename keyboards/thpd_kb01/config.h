@@ -43,6 +43,15 @@
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
 
+// LCD Pins
+#define ST7565_A0_PIN A6
+#define ST7565_RST_PIN A4
+#define ST7565_SS_PIN A3
+
+// Rotary Encoder Pins
+#define ENCODERS_PAD_A { B11 }
+#define ENCODERS_PAD_B { B12 }
+
 /*
  * Force NKRO
  *

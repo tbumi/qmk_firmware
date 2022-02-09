@@ -27,3 +27,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_NO, KC_NO, KC_NO,        KC_NO,                      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,        KC_NO      
   )
 };
+
+void st7565_task_user(void) {
+    // Host Keyboard Layer Status
+    st7565_write_P(PSTR("Layer: "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _BASE:
+            st7565_write_P(PSTR("Default\n"), false);
+            break;
+        case _FN:
+            st7565_write_P(PSTR("FN\n"), false);
+            break;
+        default:
+            st7565_write_ln_P(PSTR("Undefined"), false);
+    }
+
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    st7565_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    st7565_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    st7565_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+}
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+  if (clockwise) {
+    tap_code_delay(KC_VOLU, 10);
+  } else {
+    tap_code_delay(KC_VOLD, 10);
+  }
+  return false;
+}
